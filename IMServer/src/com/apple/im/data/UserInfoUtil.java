@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.apple.im.common.InfoType;
 import com.apple.im.common.User;
 
 /**用户信息操作类*/
@@ -12,41 +13,70 @@ public class UserInfoUtil {
 	/**登录验证用户密码
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException */
-	public boolean login(int account,String password) throws ClassNotFoundException, SQLException{
+	public boolean login(int account,String password) {
 		//判断密码和帐号是否匹配
 		String sql = "select * from yq_user where uaccount=? and upassword=?";
 		Connection conn = DBUtil.getDBUtil().getConnection();
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, account);
-		ps.setString(2, password);
-		ResultSet rs = ps.executeQuery();
-		//rs.next()如果当前行有效则返回true,如果没有行，则返回false
-		if (rs != null && rs.next() == true) {
-			return true;
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, account);
+			ps.setString(2, password);
+			ResultSet rs = null;
+			rs = ps.executeQuery();
+		    //rs.next()如果当前行有效则返回true,如果没有行，则返回false
+			if (rs != null && rs.next() == true) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false;
 	}
 	/**注册用户信息*/
-	public boolean register(User user) throws  SQLException, Exception{
+	public String register(User user){
 		String sql = "insert into yq_user values(?,?,?,?,?,?,?,?,?,?)";
+		//检测注册的帐号是否已被使用
+		String sq =  "select * from yq_user where uaccount=?";
 		Connection conn = DBUtil.getDBUtil().getConnection();
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setInt(1, user.getAccount());
-		ps.setString(2, user.getPassword());
-		ps.setString(3, user.getNick());
-		ps.setInt(4, user.getAvatar());
-		ps.setString(5, user.getTrends());
-		ps.setString(6, user.getSex());
-		ps.setInt(7, user.getAge());
-		ps.setInt(8, user.getLev());
-		ps.setString(9, user.getTime());
-		ps.setInt(10, 0);
-		//返回更新的行数
-		int r = ps.executeUpdate();
-		if (r > 0) {
-			return true;
+		PreparedStatement p = null;
+		PreparedStatement ps = null;
+		int r = 0;
+		try {
+			
+			p = conn.prepareStatement(sq);
+			p.setInt(1, user.getAccount());
+			ResultSet rs = p.executeQuery(); 
+			System.out.println("帐号");
+			if (rs.next() == true){
+				System.out.println("帐号已被使用");
+				return InfoType.ACCOUNT_HAS_BEEN_REGISTERED;
+			}
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, user.getAccount());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getNick());
+			ps.setInt(4, user.getAvatar());
+			ps.setString(5, user.getTrends());
+			ps.setString(6, user.getSex());
+			ps.setInt(7, user.getAge());
+			ps.setInt(8, user.getLev());
+			ps.setString(9, user.getTime());
+			ps.setInt(10, 0);
+			r = ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return false;
+		//返回更新的行数
+		if (r > 0) {
+			System.out.println("注册成功");
+			return InfoType.REGISTER_SUCCESSFULLY;
+		}
+		System.out.println("注册失败");
+		return InfoType.REGISTER_FAIL;
 	}
 	
 	/**删除好友*/

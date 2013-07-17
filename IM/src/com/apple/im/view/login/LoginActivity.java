@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.apple.im.R;
 import com.apple.im.common.IMMessage;
-import com.apple.im.common.IMMessageType;
+import com.apple.im.common.InfoType;
 import com.apple.im.common.User;
 import com.apple.im.control.ManageActivity;
 import com.apple.im.control.ManageClientConnectServer;
@@ -85,19 +85,14 @@ public class LoginActivity extends Activity{
 		user.setPassword(p);
 		user.setOperation("login");
 		boolean b = false;
-		try {
-			b = new LogoOrRegister(this).sendLoginInfo(user);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		b = new LogoOrRegister(this).sendLoginInfo(user);
 		//登陆成功
 		if(b){
 			try {
 				//发送一个要求返回在线好友的请求的Message
 				ObjectOutputStream oos = new ObjectOutputStream	(ManageClientConnectServer.getClientConnectServerThread(user.getAccount()).getSocket().getOutputStream());
 				IMMessage m=new IMMessage();
-				m.setType(IMMessageType.GET_ONLINE_FRIENDS);
+				m.setType(InfoType.GET_ONLINE_FRIENDS);
 				m.setSender(user.getAccount());
 				oos.writeObject(m);
 			} catch (IOException e) {

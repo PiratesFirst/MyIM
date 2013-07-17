@@ -19,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.apple.im.R;
-import com.apple.im.common.IMMessageType;
+import com.apple.im.common.InfoType;
 import com.apple.im.model.SendMessage;
 import com.apple.im.view.chat.ChatActivity;
 import com.apple.im.view.more.MoreActivity;
@@ -93,7 +93,7 @@ public class BuddyActivity extends Activity  {
 			//向服务器发送一个删除好友的包
 			SendMessage.sendADbuddy(MoreActivity.me.getAccount(), 
 					temp.getAccount(), 
-					IMMessageType.DEL_BUDDY);
+					InfoType.DEL_BUDDY);
 			//删除好友列表中的该好友
 			for(int i=0;i<buddyEntityList.size();i++){
 				if((buddyEntityList.get(i).getAccount())==temp.getAccount()){

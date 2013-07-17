@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 import com.apple.im.common.IMMessage;
-import com.apple.im.common.IMMessageType;
+import com.apple.im.common.InfoType;
 
 public class ServerConnectClientThread extends Thread{
 	Socket socket;
@@ -19,31 +19,31 @@ public class ServerConnectClientThread extends Thread{
 			IMMessage mes = null;
 			try {
 				ois = new ObjectInputStream(socket.getInputStream());
+				System.out.println("读取对象成功");
 				mes = (IMMessage) ois.readObject();
-				if(mes.getType().equals(IMMessageType.COM_MES)){//如果是普通消息包
-					controlAndSendMessage.sendMessageToReceiver(mes);
-				}else if(mes.getType().equals(IMMessageType.GROUP_MES)){ //如果是群消息
-					controlAndSendMessage.sendGroupMes(mes);
-				}else if(mes.getType().equals(IMMessageType.GET_ONLINE_FRIENDS)){//如果是请求好友列表
-					controlAndSendMessage.sendBuddyList(mes);
-				}else if(mes.getType().equals(IMMessageType.DEL_BUDDY)){ //如果是删除好友
-					controlAndSendMessage.delBuddy(mes);
-				}
-			} catch (IOException e) {
+				System.out.println("读取对象成功");
+			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
 				try {
-					socket.close();
 					ois.close();
-				} catch (IOException e1) {	
+					socket.close();
+					System.out.println("读取对象失败");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			}
+			if(mes.getType().equals(InfoType.COM_MES)){//如果是普通消息包
+					controlAndSendMessage.sendMessageToReceiver(mes);
+			}else if(mes.getType().equals(InfoType.GROUP_MES)){ //如果是群消息
+					controlAndSendMessage.sendGroupMes(mes);
+			}else if(mes.getType().equals(InfoType.GET_ONLINE_FRIENDS)){//如果是请求好友列表
+					controlAndSendMessage.sendBuddyList(mes);
+			}else if(mes.getType().equals(InfoType.DEL_BUDDY)){ //如果是删除好友
+					controlAndSendMessage.delBuddy(mes);
+			}	
 		}
 	}
 }

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.apple.im.R;
 import com.apple.im.common.ClientTime;
-import com.apple.im.common.IMMessageType;
+import com.apple.im.common.InfoType;
 import com.apple.im.control.ManageActivity;
 import com.apple.im.model.SendMessage;
 import com.apple.im.view.more.MoreActivity;
@@ -63,9 +63,9 @@ public class ChatActivity extends Activity{
 			    		false));
 				//发送消息
 				if(getIntent().getIntExtra("avatar", 0)==7){ //群消息
-					SendMessage.sendMes(chatAccount, chatContent,IMMessageType.GROUP_MES);
+					SendMessage.sendMes(chatAccount, chatContent,InfoType.GROUP_MES);
 				}else { //好友消息
-					SendMessage.sendMes(chatAccount, chatContent,IMMessageType.COM_MES);
+					SendMessage.sendMes(chatAccount, chatContent,InfoType.COM_MES);
 				}
 			}
 		});

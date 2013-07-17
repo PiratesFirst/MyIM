@@ -97,7 +97,7 @@ public class MainActivity extends TabActivity{
 			break;
 		case R.id.menu_about:
 			Dialog alertDialog = new AlertDialog.Builder(this)
-            	.setTitle("关于YQ")
+            	.setTitle("关于IM")
             	.setMessage("只为学习之用，勿用于商业用途！\nQQ：569629066\nBy：柒小狐")
             	.create();
 			alertDialog.show();
@@ -171,8 +171,8 @@ public class MainActivity extends TabActivity{
         PendingIntent contentItent = PendingIntent.getActivity(this, 0, 
                 notificationIntent, 0); 
         notification.setLatestEventInfo(this, 
-        		"YQ",  // 通知栏标题
-        		"Android 即时通信工具 YQ",  // 通知栏内容
+        		"IM",  // 通知栏标题
+        		"Android 即时通信工具 ",  // 通知栏内容
         		contentItent); // 点击该通知后要跳转的Activity
         // 把Notification传递给NotificationManager，id为0
         notificationManager.notify(0, notification); 

@@ -12,28 +12,60 @@ public class GroupInfoUtil {
 	/**获得所有用户组信息,帐号，昵称，动态
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException */
-	public String getGroup() throws ClassNotFoundException, SQLException{
+	public String getGroup() {
 		String groupInfo = "";
 		String sql = "select * from yq_group";
-		Connection conn = DBUtil.getDBUtil().getConnection();
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		while(rs.next()){
-			groupInfo = groupInfo + rs.getInt("gaccount")+"_"+rs.getString("gnick")+"_"+rs.getString("gtrends")+" ";
+		Connection conn = null;
+		conn = DBUtil.getDBUtil().getConnection();
+		if (conn == null){
+			return groupInfo;
+		}
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet rs = null;
+		try {
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while(rs.next()){
+				groupInfo = groupInfo + rs.getInt("gaccount")+"_"+rs.getString("gnick")+"_"+rs.getString("gtrends")+" ";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return groupInfo;
 	}
 	
-	/**获得指定用户组昵称*/
-	public String getGroupNick(int gaccount) throws Exception, SQLException{
+	/**获得指定用户组昵称
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException */
+	public String getGroupNick(int gaccount) {
 		String groupNick = "";
 		String sql = "select * from yq_group where gaccount="+gaccount;
-		Connection conn = DBUtil.getDBUtil().getConnection();
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
+		Connection conn;
+		conn = DBUtil.getDBUtil().getConnection();
+		ResultSet rs =null;
+		PreparedStatement ps = null;
+		try {
+		ps = conn.prepareStatement(sql);
+		rs = ps.executeQuery();
 		
 		while(rs.next()){
 			groupNick=rs.getString("gnick");
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return groupNick;
 	}

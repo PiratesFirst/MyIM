@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.apple.im.R;
-import com.apple.im.common.IMMessageType;
+import com.apple.im.common.InfoType;
 import com.apple.im.view.chat.ChatActivity;
 public class RecentActivity extends Activity{
 	ListView listView;
@@ -46,7 +46,7 @@ public class RecentActivity extends Activity{
 				int avatar=Integer.parseInt(mes[4]);
 				int account=Integer.parseInt(mes[2]);
 				String nick=mes[3];
-				if(mes[7].equals(IMMessageType.GROUP_MES)){
+				if(mes[7].equals(InfoType.GROUP_MES)){
 					 avatar=7;
 					 account=Integer.parseInt(mes[0]);
 					 nick=mes[1];
@@ -94,7 +94,7 @@ public class RecentActivity extends Activity{
 		public void onReceive(Context context, Intent intent) {
 			mes = intent.getStringArrayExtra("message");
 			//如果是群消息
-		    if(mes[7].equals(IMMessageType.GROUP_MES)){
+		    if(mes[7].equals(InfoType.GROUP_MES)){
 			    Iterator it=chatEntityList.iterator();
 			    if(chatEntityList!=null && chatEntityList.size()!=0){
 			    	while(it.hasNext()){

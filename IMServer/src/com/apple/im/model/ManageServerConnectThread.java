@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 /**管理服务器与客户端连接的线程*/
 public class ManageServerConnectThread {
-	public static HashMap hm =new  HashMap <Integer, ServerConnectClientThread>();
+	public static HashMap<Integer, ServerConnectClientThread> hm =new  HashMap <Integer, ServerConnectClientThread>();
 	
 	/**添加一个客户端通信线程在map中*/
 	public static void addClientThreadToMap(int account,ServerConnectClientThread scct){
@@ -22,10 +22,10 @@ public class ManageServerConnectThread {
 	}
 	
 	/**返回当前在线人的情况*/
-	public static List getAllOnLineUserid(){
-		List list=new ArrayList();
+	public static List<Integer> getAllOnLineUserid(){
+		List<Integer> list=new ArrayList<Integer>();
 		//使用迭代器完成
-		Iterator it=hm.keySet().iterator();
+		Iterator<Integer> it=hm.keySet().iterator();
 		while(it.hasNext()){
 			list.add((int) it.next());
 		}
@@ -35,7 +35,7 @@ public class ManageServerConnectThread {
 	/**根据线程连接情况判断哪些用户在线*/
 	public static boolean isOnline(int account){
 		//使用迭代器完成
-		Iterator it=hm.keySet().iterator();
+		Iterator<Integer> it=hm.keySet().iterator();
 		while(it.hasNext()){
 			int a=(int) it.next();
 			if(a==account){

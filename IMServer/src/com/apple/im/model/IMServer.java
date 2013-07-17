@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Date;
 
 import com.apple.im.common.IMMessage;
-import com.apple.im.common.IMMessageType;
+import com.apple.im.common.InfoType;
 import com.apple.im.common.User;
 import com.apple.im.data.UserInfoUtil;
 
@@ -19,9 +19,10 @@ public class IMServer {
 			System.out.println("服务器已启动 in "+new Date());
 			while(true){
 				Socket socket=serverSocket.accept();
+				System.out.println("IMServer"+"socket:"+socket);
 				//接受客户端发来的信息
 				ObjectInputStream ois=new ObjectInputStream(socket.getInputStream());
-				User u=(User) ois.readObject();
+				User u=(User)ois.readObject();
 				IMMessage m=new IMMessage();
 				ObjectOutputStream oos=new ObjectOutputStream(socket.getOutputStream());
 		        if(u.getOperation().equals("login")){ //登录
@@ -35,24 +36,28 @@ public class IMServer {
 						//得到个人信息
 						String user=userInfoUtil.getUserFromDB(account);
 						//返回一个成功登陆的信息包，并附带个人信息
-						m.setType(IMMessageType.SUCCESS);
+						m.setType(InfoType.SUCCESS);
 						m.setContent(user);
 						oos.writeObject(m);
 						ServerConnectClientThread cct=new ServerConnectClientThread(socket);//单开一个线程，让该线程与该客户端保持连接
 						ManageServerConnectThread.addClientThreadToMap(u.getAccount(),cct);
 						cct.start();//启动与该客户端通信的线程
 					}else{
-						m.setType(IMMessageType.FAIL);
+						m.setType(InfoType.FAIL);
 						oos.writeObject(m);
 					}
 		        }else if(u.getOperation().equals("register")){
 		        	UserInfoUtil userInfoUtil=new UserInfoUtil();
-		        	if(userInfoUtil.register(u)){
+		        	String temp = userInfoUtil.register(u);
+		        	if(temp.equals(InfoType.REGISTER_SUCCESSFULLY)){
 		        		//返回一个注册成功的信息包
-						m.setType(IMMessageType.SUCCESS);
+						m.setType(InfoType.REGISTER_SUCCESSFULLY);
 						oos.writeObject(m);
-		        	}else {
-		        		m.setType(IMMessageType.FAIL);//注册失败则返回一个注册失败的信息包
+		        	}else if(temp.equals(InfoType.REGISTER_FAIL)){
+		        		m.setType(InfoType.REGISTER_FAIL);//注册失败则返回一个注册失败的信息包
+						oos.writeObject(m);
+		        	}else{
+		        		m.setType(InfoType.ACCOUNT_HAS_BEEN_REGISTERED);//帐号已被注册
 						oos.writeObject(m);
 		        	}
 		        }
