@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.apple.im.R;
-import com.apple.im.view.buddy.BuddyActivity;
+import com.apple.im.view.buddy.buddyActivity;
 
 public class TrendsAcitivy extends Activity{
 	private List<Map<String,String>> data = new ArrayList<Map<String,String>>(); 
@@ -24,7 +24,7 @@ public class TrendsAcitivy extends Activity{
 		
 		ListView listView = (ListView) findViewById(R.id.lv_trends);  
        
-		parse(BuddyActivity.buddyStr);
+		parse(buddyActivity.buddyStr);
         SimpleAdapter adapter=new SimpleAdapter(  
                 this,  
                 data,

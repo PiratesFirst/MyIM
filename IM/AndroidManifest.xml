@@ -21,7 +21,7 @@
         <activity android:name=".view.register.RegisterActivity"/>
         <activity android:name=".view.main.MainActivity"/>
         <activity android:name=".view.recent.RecentActivity"/>
-        <activity android:name=".view.bunddy.BuddyActivity"/>
+        <activity android:name=".view.buddy.buddyActivity"/>
         <activity android:name=".view.group.GroupActivity"/>
         <activity android:name=".view.trend.TrendsAcitivy"/>
         <activity android:name=".view.more.MoreActivity"/>

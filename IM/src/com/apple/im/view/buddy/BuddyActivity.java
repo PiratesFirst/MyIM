@@ -24,7 +24,7 @@ import com.apple.im.model.SendMessage;
 import com.apple.im.view.chat.ChatActivity;
 import com.apple.im.view.more.MoreActivity;
 
-public class BuddyActivity extends Activity  {
+public class buddyActivity extends Activity  {
 	ListView listView;
 	public static String buddyStr = "";
 	List<BuddyEntity> buddyEntityList = new ArrayList<BuddyEntity>();//好友列表
@@ -52,7 +52,7 @@ public class BuddyActivity extends Activity  {
 			public void onItemClick(AdapterView<?> a, View v, int position,long l) {
 				temp= (BuddyEntity) listView.getItemAtPosition(position);
 				//打开聊天页面
-				Intent intent=new Intent(BuddyActivity.this,ChatActivity.class);
+				Intent intent=new Intent(buddyActivity.this,ChatActivity.class);
 				intent.putExtra("avatar", temp.getAvatar());
 				intent.putExtra("account",temp.getAccount());
 				intent.putExtra("nick", temp.getNick());
@@ -83,7 +83,7 @@ public class BuddyActivity extends Activity  {
 		switch(item.getItemId()){
 		case 0:
 			//打开聊天页面
-			Intent intent=new Intent(BuddyActivity.this,ChatActivity.class);
+			Intent intent=new Intent(buddyActivity.this,ChatActivity.class);
 			intent.putExtra("avatar", temp.getAvatar());
 			intent.putExtra("account",temp.getAccount());
 			intent.putExtra("nick", temp.getNick());

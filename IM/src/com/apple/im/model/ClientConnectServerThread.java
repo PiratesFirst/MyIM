@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.apple.im.common.IMMessage;
 import com.apple.im.common.InfoType;
-import com.apple.im.view.buddy.BuddyActivity;
+import com.apple.im.view.buddy.buddyActivity;
 import com.apple.im.view.group.GroupActivity;
 
 /**客户端与服务器端连接的线程类*/
@@ -53,7 +53,7 @@ public class ClientConnectServerThread extends Thread{
 				}else if (m.getType().equals(InfoType.RET_ONLINE_FRIENDS)){
 					//如果是好友列表,更新好友，群
 					String socket[] = m.getContent().split(",");
-					BuddyActivity.buddyStr=socket[0];
+					buddyActivity.buddyStr=socket[0];
 					GroupActivity.groupStr=socket[1];
 				}
 				if (m.getType().equals(InfoType.SUCCESS)){

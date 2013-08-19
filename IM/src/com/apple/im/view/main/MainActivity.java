@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.apple.im.R;
 import com.apple.im.control.ManageActivity;
-import com.apple.im.view.buddy.BuddyActivity;
+import com.apple.im.view.buddy.buddyActivity;
 import com.apple.im.view.group.GroupActivity;
 import com.apple.im.view.more.MoreActivity;
 import com.apple.im.view.recent.RecentActivity;
@@ -133,7 +133,7 @@ public class MainActivity extends TabActivity{
 	
 	private void setupIntent() {
 		recentIntent= new Intent(this, RecentActivity.class);
-		buddyIntent= new Intent(this, BuddyActivity.class);
+		buddyIntent= new Intent(this, buddyActivity.class);
 		groupIntent= new Intent(this, GroupActivity.class);
 		trendsIntent= new Intent(this, TrendsAcitivy.class);
 		moreIntent= new Intent(this, MoreActivity.class);
